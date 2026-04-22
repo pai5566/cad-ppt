@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡倫特CAD教程 - 互動簡報</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 工程藍圖風格背景 */
+        .blueprint-bg {
+            background-color: #0b1d3a;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .slide {
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+        }
+        .slide.hidden-slide {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        .slide.active-slide {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            z-index: 10;
+        }
+        /* 步驟動畫 */
+        .step-item {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+        .step-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="blueprint-bg text-white font-sans overflow-hidden">
+
+    <div id="presentation-container" class="relative w-full h-screen flex justify-center items-center">
+        
+        <!-- Slide 1: 封面 -->
+        <div class="slide active-slide absolute inset-0 flex flex-col justify-center items-center text-center p-10">
+            <div class="border-4 border-cyan-400 p-12 bg-gray-900/80 backdrop-blur-sm shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                <h3 class="text-2xl text-cyan-300 mb-4 tracking-widest">卡倫特 CAD 教程</h3>
+                <h1 class="text-6xl font-bold mb-6 text-white tracking-wider">
+                    第9章：塊 (Blocks)<br>
+                    <span class="text-4xl text-gray-300 mt-4 block">& 第10章：圖紙打印</span>
+                </h1>
+                <p class="text-xl text-gray-400 mt-8">互動式網頁教學演示</p>
+                <div class="mt-8 text-cyan-500 animate-pulse">使用鍵盤 [ ➔ ] 或下方按鈕開始</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: 什麼是塊？(圖文與SVG動態展示) -->
+        <div class="slide hidden-slide absolute inset-0 flex flex-col justify-center items-start p-20 max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold mb-8 text-cyan-400 border-b-2 border-cyan-400 pb-4 w-full">9.1 什麼是「塊」？</h2>
+            <div class="grid grid-cols-2 gap-12 w-full">
+                <div class="text-2xl leading-relaxed text-gray-200">
+                    <p class="mb-6">在圖樣繪製過程中，經常會重複使用由若干圖形對象組合而成的一個圖形單元。這就是<strong class="text-yellow-400">「塊」</strong>。</p>
+                    <ul class="list-disc pl-8 space-y-4 text-xl">
+                        <li><strong>極大簡化流程：</strong> 減少重複性繪圖工作。</li>
+                        <li><strong>統一修改：</strong> 修改一次塊，所有插入的實體都會更新。</li>
+                        <li><strong>常見應用：</strong> 幾何圖形、電子元件(電阻)、建築(門窗)、指北針等。</li>
+                    </ul>
+                </div>
+                <!-- 用 SVG 模擬 CAD 的符號 -->
+                <div class="bg-gray-800/80 p-8 border border-gray-600 rounded-lg flex flex-col items-center justify-center">
+                    <h4 class="text-xl text-gray-400 mb-6">圖 9-1 符號圖塊範例</h4>
+                    <div class="flex space-x-12">
+                        <!-- 電阻符號 -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-24 h-24 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="square" d="M2 12h4l2 -5l4 10l4 -10l4 10l2 -5h2"></path>
+                            </svg>
+                            <span class="mt-4 text-lg">電子元件 (電阻)</span>
+                        </div>
+                        <!-- 指北針符號 -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-24 h-24 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2l4 10-4 10-4-10z" fill="currentColor"></path>
+                            </svg>
+                            <span class="mt-4 text-lg">指北針</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 互動式步驟 (第10章 列印) -->
+        <div class="slide hidden-slide absolute inset-0 flex flex-col justify-center items-center p-20">
+            <h2 class="text-5xl font-bold mb-12 text-cyan-400">第10章：列印模型步驟</h2>
+            
+            <div class="w-full max-w-4xl bg-gray-900 border border-cyan-800 rounded-xl p-8 relative overflow-hidden shadow-2xl">
+                <!-- 裝飾列印機進度條 -->
+                <div class="absolute top-0 left-0 h-1 bg-cyan-500 w-full animate-pulse"></div>
+
+                <div class="space-y-6">
+                    <div class="step-item flex items-center p-4 bg-gray-800 rounded-lg border-l-4 border-yellow-400">
+                        <div class="text-3xl font-bold text-yellow-400 mr-6">01</div>
+                        <div>
+                            <h3 class="text-2xl font-bold">啟動列印命令</h3>
+                            <p class="text-gray-400 text-lg">快捷鍵：<kbd class="bg-gray-700 px-2 py-1 rounded text-white">Ctrl + P</kbd> 或輸入 <kbd class="bg-gray-700 px-2 py-1 rounded text-white">PLOT</kbd></p>
+                        </div>
+                    </div>
+
+                    <div class="step-item flex items-center p-4 bg-gray-800 rounded-lg border-l-4 border-green-400">
+                        <div class="text-3xl font-bold text-green-400 mr-6">02</div>
+                        <div>
+                            <h3 class="text-2xl font-bold">選擇印表機</h3>
+                            <p class="text-gray-400 text-lg">在「列印為」選項選擇印表機。若未安裝，請選擇輸出為 <strong class="text-white">PDF</strong>。</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item flex items-center p-4 bg-gray-800 rounded-lg border-l-4 border-blue-400">
+                        <div class="text-3xl font-bold text-blue-400 mr-6">03</div>
+                        <div>
+                            <h3 class="text-2xl font-bold">設定圖紙尺寸與範圍</h3>
+                            <p class="text-gray-400 text-lg">例如：選擇 <strong class="text-white">ISO A3 (420 x 297 mm)</strong>，設定列印比例為「佈滿圖紙」。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <button onclick="showNextStep()" id="stepBtn" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                        顯示下一步
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: 隨堂測驗 (互動) -->
+        <div class="slide hidden-slide absolute inset-0 flex flex-col justify-center items-center text-center p-20 bg-gray-900">
+            <h2 class="text-5xl font-bold mb-10 text-yellow-400">隨堂小測驗</h2>
+            <div class="bg-gray-800 p-10 rounded-2xl border border-gray-600 max-w-3xl w-full">
+                <p class="text-3xl mb-8">在 CAD 中，啟動「列印 (Plot)」的快捷鍵是什麼？</p>
+                <div class="grid grid-cols-2 gap-6" id="quiz-options">
+                    <button onclick="checkAnswer(this, false)" class="text-xl py-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition border-2 border-transparent">Ctrl + C</button>
+                    <button onclick="checkAnswer(this, true)" class="text-xl py-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition border-2 border-transparent">Ctrl + P</button>
+                    <button onclick="checkAnswer(this, false)" class="text-xl py-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition border-2 border-transparent">Ctrl + S</button>
+                    <button onclick="checkAnswer(this, false)" class="text-xl py-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition border-2 border-transparent">Alt + P</button>
+                </div>
+                <div id="quiz-result" class="mt-8 text-2xl font-bold hidden"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 導航控制 UI -->
+    <div class="fixed bottom-6 left-0 w-full flex justify-between items-center px-8 z-50">
+        <button id="prevBtn" onclick="nextSlide(-1)" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-lg text-white font-semibold transition disabled:opacity-30 disabled:cursor-not-allowed">
+            ◀ 上一頁
+        </button>
+        <div class="flex space-x-3" id="indicators">
+            <!-- 指示器由 JS 生成 -->
+        </div>
+        <button id="nextBtn" onclick="nextSlide(1)" class="px-5 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-lg text-white font-semibold transition disabled:opacity-30 disabled:cursor-not-allowed">
+            下一頁 ▶
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicatorsContainer = document.getElementById('indicators');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // 建立點點指示器
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = `w-3 h-3 rounded-full transition-colors duration-300 ${i === 0 ? 'bg-cyan-400' : 'bg-gray-600'}`;
+            indicatorsContainer.appendChild(dot);
+        });
+        const indicators = indicatorsContainer.children;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.remove('hidden-slide');
+                    slide.classList.add('active-slide');
+                } else {
+                    slide.classList.remove('active-slide');
+                    slide.classList.add('hidden-slide');
+                }
+            });
+
+            Array.from(indicators).forEach((dot, index) => {
+                dot.className = `w-3 h-3 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-cyan-400' : 'bg-gray-600'}`;
+            });
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function nextSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            updateSlides();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide(1);
+            if (e.key === 'ArrowLeft') nextSlide(-1);
+        });
+
+        // 第3頁：步驟顯示邏輯
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.step-item');
+        const stepBtn = document.getElementById('stepBtn');
+        
+        function showNextStep() {
+            if (currentStep < steps.length) {
+                steps[currentStep].classList.add('show');
+                currentStep++;
+                if (currentStep >= steps.length) {
+                    stepBtn.innerText = '步驟演示完畢';
+                    stepBtn.classList.replace('bg-cyan-600', 'bg-gray-600');
+                    stepBtn.disabled = true;
+                }
+            }
+        }
+
+        // 第4頁：測驗邏輯
+        function checkAnswer(btn, isCorrect) {
+            const resultDiv = document.getElementById('quiz-result');
+            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
+            
+            allBtns.forEach(b => b.disabled = true); // 鎖定按鈕
+
+            if (isCorrect) {
+                btn.classList.add('bg-green-600', 'border-green-400');
+                resultDiv.innerText = "🎉 答對了！快捷鍵是 Ctrl + P (PLOT)";
+                resultDiv.className = "mt-8 text-2xl font-bold text-green-400 block";
+            } else {
+                btn.classList.add('bg-red-600', 'border-red-400');
+                resultDiv.innerText = "❌ 答錯了，請回憶第 10 章的內容。";
+                resultDiv.className = "mt-8 text-2xl font-bold text-red-400 block";
+            }
+        }
+    </script>
+</body>
+</html>
